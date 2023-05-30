@@ -84,6 +84,7 @@ public class PickUp : MonoBehaviour
         objectToHold.GetComponent<Rigidbody2D>().simulated = true;
         isHoldingObject = false;
         objectToHold.GetComponent<Rigidbody2D>().velocity = throwDirection * throwForce;    // Throws the object the player is holding
+        if(objectToHold.GetComponent<EnableMovementOnFreeze>() != null) objectToHold.GetComponent<EnableMovementOnFreeze>().SetVelocity(throwDirection * throwForce);   // Stores velocity for objects that only move when frozen
         objectToHold = null;
     }
 }

@@ -8,6 +8,7 @@ public class TimeScaleController : MonoBehaviour
     private bool isTimeSped = false;
     private bool isTimeFrozen = false;
     private bool abilityActive;
+    private Vector2 velocity;   // Keeps track of player's velocity before freezing
 
     [SerializeField] private float abilityDuration = 3f;
     private float timer = 0f;
@@ -64,7 +65,6 @@ public class TimeScaleController : MonoBehaviour
         {
             // Update the timer based on unscaled deltaTime
             timer -= Time.unscaledDeltaTime;
-            Debug.Log("Timer: " + timer);
 
             if (timer <= 0f)
             {
@@ -91,7 +91,11 @@ public class TimeScaleController : MonoBehaviour
     void StopTime()
     {
         DefaultTimeScale();
-        Time.timeScale = 0f;
+        //Time.timeScale = 0f;
+        velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+        gameObject.GetComponent<PlayerMovement>().enabled = false;
+        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;//simulated = false;
+        gameObject.GetComponent<PickUp>().enabled = false;
         isTimeFrozen = true;
     }
 
@@ -100,8 +104,20 @@ public class TimeScaleController : MonoBehaviour
         Time.timeScale = 1f;
         isTimeSlowed = false;
         isTimeSped = false;
-        isTimeFrozen = false;
+        if (isTimeFrozen)
+        {
+            gameObject.GetComponent<PlayerMovement>().enabled = enabled;
+            gameObject.GetComponent<Rigidbody2D>().constraints &= ~RigidbodyConstraints2D.FreezePosition;//simulated = true;
+            gameObject.GetComponent<Rigidbody2D>().velocity = velocity;
+            gameObject.GetComponent<PickUp>().enabled = true;
+            isTimeFrozen = false;
+        }
 
         timer = abilityDuration;
+    }
+
+    public bool GetIsTimeFrozen()
+    {
+        return isTimeFrozen;
     }
 }
