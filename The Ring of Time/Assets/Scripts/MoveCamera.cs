@@ -24,7 +24,7 @@ public class MoveCamera : MonoBehaviour
     }
     private void LateUpdate()
     {
-        if (moveDone && !playerDead)
+        if (moveDone && !playerDead)    // Only shifts camera when the player is alive and moved between constraints
         {
             if (player.position.x < leftThreshold.position.x)
             {
@@ -93,6 +93,6 @@ public class MoveCamera : MonoBehaviour
 
     public void RespawnCamera()
     {
-        targetPosition = cameraRespawn.GetCameraSpawnPoint();
+        targetPosition = cameraRespawn.GetCameraSpawnPoint();   // Gets location for camera at checkpoint
     }
 }
