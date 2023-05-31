@@ -10,32 +10,41 @@ public class MoveCamera : MonoBehaviour
     [SerializeField] private Transform rightThreshold;
     [SerializeField] private Transform topThreshold;
     [SerializeField] private Transform bottomThreshold;
+    [SerializeField] private SpawnManager cameraRespawn;
+
+
     private Vector3 targetPosition;
-    public bool moveDone;
+    private bool moveDone;
+    public bool playerDead;
 
     private void Start()
     {
         targetPosition = transform.position;
+        playerDead = false;
     }
     private void LateUpdate()
     {
-        if (moveDone)
+        if (moveDone && !playerDead)
         {
             if (player.position.x < leftThreshold.position.x)
             {
+                Debug.Log("moveDone: " + moveDone);
                 MoveLeft();
             }
             else if (player.position.x > rightThreshold.position.x)
             {
+                Debug.Log("moveDone: " + moveDone);
                 MoveRight();
             }
 
             if (player.position.y > topThreshold.position.y)
             {
+                Debug.Log("moveDone: " + moveDone);
                 MoveUp();
             }
             else if (player.position.y < bottomThreshold.position.y)
             {
+                Debug.Log("moveDone: " + moveDone);
                 MoveDown();
             }
         }
@@ -46,10 +55,11 @@ public class MoveCamera : MonoBehaviour
             moveDone = false;
             // Move camera towards target position
             transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            if (playerDead) playerDead = false;
         }
         else
         {
-            moveDone = true;            
+            moveDone = true;
         }
     }
 
@@ -79,5 +89,10 @@ public class MoveCamera : MonoBehaviour
         float shiftAmount = bottomThreshold.position.y - topThreshold.position.y;
         // Calculate target position based on current camera position and shift amount
         targetPosition = transform.position + new Vector3(0f, shiftAmount, 0f);
+    }
+
+    public void RespawnCamera()
+    {
+        targetPosition = cameraRespawn.GetCameraSpawnPoint();
     }
 }

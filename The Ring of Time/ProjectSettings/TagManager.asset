@@ -7,6 +7,7 @@ TagManager:
   - Ground
   - Pickup
   - Spike
+  - Check Point
   layers:
   - Default
   - TransparentFX
