@@ -14,7 +14,7 @@ public class MoveCamera : MonoBehaviour
 
 
     private Vector3 targetPosition;
-    private bool moveDone;
+    public bool moveDone;
     public bool playerDead;
 
     private void Start()
@@ -53,9 +53,11 @@ public class MoveCamera : MonoBehaviour
         if (Vector3.Distance(transform.position, targetPosition) > 0.01f)
         {
             moveDone = false;
-            // Move camera towards target position
-            transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
-            if (playerDead) playerDead = false;
+            if (!playerDead)    // Only moves camera when the player is alive
+            {
+                // Move camera towards target position
+                transform.position = Vector3.Lerp(transform.position, targetPosition, moveSpeed * Time.deltaTime);
+            }
         }
         else
         {

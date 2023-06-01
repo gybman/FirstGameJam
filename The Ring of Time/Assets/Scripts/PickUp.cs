@@ -9,6 +9,7 @@ public class PickUp : MonoBehaviour
     private GameObject objectToHold;
 
     private TimeScaleController timeController;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -77,14 +78,22 @@ public class PickUp : MonoBehaviour
 
     private void DropObject()
     {
-        Vector2 throwDirection = new Vector2(gameObject.transform.localScale.x, 0); // throws in the direction the player is facing
-       
-        // Drop the currently held object
-        objectToHold.transform.SetParent(null);
-        objectToHold.GetComponent<Rigidbody2D>().simulated = true;
-        isHoldingObject = false;
-        objectToHold.GetComponent<Rigidbody2D>().velocity = throwDirection * throwForce;    // Throws the object the player is holding
-        if(objectToHold.GetComponent<EnableMovementOnFreeze>() != null) objectToHold.GetComponent<EnableMovementOnFreeze>().SetVelocity(throwDirection * throwForce);   // Stores velocity for objects that only move when frozen
-        objectToHold = null;
+        if (objectToHold != null)
+        {
+            Vector2 throwDirection = new Vector2(gameObject.transform.localScale.x, 0); // throws in the direction the player is facing
+
+            // Drop the currently held object
+            objectToHold.transform.SetParent(null);
+            objectToHold.GetComponent<Rigidbody2D>().simulated = true;
+            isHoldingObject = false;
+            objectToHold.GetComponent<Rigidbody2D>().velocity = throwDirection * throwForce;    // Throws the object the player is holding
+            if (objectToHold.GetComponent<EnableMovementOnFreeze>() != null) objectToHold.GetComponent<EnableMovementOnFreeze>().SetVelocity(throwDirection * throwForce);   // Stores velocity for objects that only move when frozen
+            objectToHold = null;
+        }
+    }
+
+    public void PlayerDied()
+    {
+        DropObject();
     }
 }

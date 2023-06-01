@@ -7,6 +7,7 @@ public class CheckPointSpawnPoint : MonoBehaviour
 {
     private Transform spawnPoint;
     [SerializeField] private SpawnManager spawnManager;
+    [SerializeField] private CheckpointManager checkPointSave;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +28,7 @@ public class CheckPointSpawnPoint : MonoBehaviour
         {
             spawnManager.SetRespawnPoint(gameObject.transform);
             spawnManager.SetCameraSpawnPoint();
+            checkPointSave.SavePositions();
         }
     }
 }
