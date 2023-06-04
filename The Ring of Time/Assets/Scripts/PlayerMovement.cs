@@ -8,11 +8,13 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] private float jumpForce;
     [SerializeField] private float defPlayerScale;
     [SerializeField] private float raycastDistance;
-    [SerializeField] private Transform raycastTransform;    // stores value for raycast
-    private Vector2 raycastOrigin;                          // prevents player from getting unlimited jumps from ceiling
+    [SerializeField] private Transform abovePlayerRaycastTransform;     // stores value for raycast above head
+    [SerializeField] private Transform belowPlayerRaycastTransform;     // stores value for raycast below player
+    private Vector2 abovePlayerRaycastOrigin;                           // prevents player from getting unlimited jumps from ceiling
+    private Vector2 belowPlayerRaycastOrigin;                           // resets jumps when player lands on something  
     private int maxJumps = 2;
     private int jumpsRemaining;
-    private bool isGrounded = false;
+    // private bool isGrounded = false;
     private int groundLayer = 6;
     private int wallJump = 7;
     private Rigidbody2D rb;
@@ -22,7 +24,8 @@ public class PlayerMovement : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = maxJumps;
-        raycastOrigin = new Vector2(raycastTransform.position.x, raycastTransform.position.y);
+        abovePlayerRaycastOrigin = new Vector2(abovePlayerRaycastTransform.position.x, abovePlayerRaycastTransform.position.y);
+        belowPlayerRaycastOrigin = new Vector2(belowPlayerRaycastTransform.position.x, belowPlayerRaycastTransform.position.y);
     }
 
     private void Update()
@@ -54,28 +57,31 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.layer == groundLayer && IsObstacleAboveHead())
+        // collision.gameObject.layer == groundLayer
+        if (IsObstacleBelowPlayer() && !IsObstacleAboveHead())
         {
-            isGrounded = true;
+            // isGrounded = true;
             jumpsRemaining = maxJumps;
         }
 
         if (collision.gameObject.layer == wallJump && collision.gameObject != lastCollisionObject)
         {
-            jumpsRemaining++;
+            if (jumpsRemaining < 2)
+            {
+                jumpsRemaining++;
+            }
         }
         lastCollisionObject = collision.gameObject;
     }
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        // Check if the player is not touching the ground
-        if (collision.gameObject.layer == groundLayer)
+        if (!IsObstacleBelowPlayer())
         {
-            isGrounded = false;
-            if(jumpsRemaining > 1)
+            // isGrounded = false;
+            if (jumpsRemaining > 1)
             {
                 jumpsRemaining--;
             }
@@ -85,8 +91,20 @@ public class PlayerMovement : MonoBehaviour
     // Makes sure the player can jump up
     private bool IsObstacleAboveHead()
     {
-        raycastOrigin = new Vector2(raycastTransform.position.x, raycastTransform.position.y);
-        RaycastHit2D hit = Physics2D.Raycast(raycastOrigin, Vector2.up, raycastDistance);
-        return hit.collider == null;
+        bool obstacleAboveHead = false;
+        abovePlayerRaycastOrigin = new Vector2(abovePlayerRaycastTransform.position.x, abovePlayerRaycastTransform.position.y);
+        RaycastHit2D hit = Physics2D.Raycast(abovePlayerRaycastOrigin, Vector2.up, raycastDistance);
+        obstacleAboveHead = hit.collider != null && !hit.collider.CompareTag("Check Point");
+        return obstacleAboveHead;
+    }
+
+    // Will reset jump if the player is on something
+    private bool IsObstacleBelowPlayer()
+    {
+        bool obstacleBelowHead = false;
+        belowPlayerRaycastOrigin = new Vector2(belowPlayerRaycastTransform.position.x, belowPlayerRaycastTransform.position.y);
+        RaycastHit2D hit = Physics2D.Raycast(belowPlayerRaycastOrigin, Vector2.down, raycastDistance);
+        obstacleBelowHead = hit.collider != null && !hit.collider.CompareTag("Check Point");
+        return obstacleBelowHead;
     }
 }

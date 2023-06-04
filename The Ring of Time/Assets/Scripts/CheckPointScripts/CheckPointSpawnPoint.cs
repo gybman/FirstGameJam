@@ -13,6 +13,8 @@ public class CheckPointSpawnPoint : MonoBehaviour
     void Start()
     {
         spawnPoint = gameObject.transform;
+        spawnManager = GameObject.Find("SpawnManager").GetComponent<SpawnManager>();
+        checkPointSave = GameObject.Find("SpawnManager").GetComponent<CheckpointManager>();
     }
 
     // Update is called once per frame

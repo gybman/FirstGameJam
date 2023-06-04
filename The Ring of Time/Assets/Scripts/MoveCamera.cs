@@ -28,23 +28,19 @@ public class MoveCamera : MonoBehaviour
         {
             if (player.position.x < leftThreshold.position.x)
             {
-                Debug.Log("moveDone: " + moveDone);
                 MoveLeft();
             }
             else if (player.position.x > rightThreshold.position.x)
             {
-                Debug.Log("moveDone: " + moveDone);
                 MoveRight();
             }
 
             if (player.position.y > topThreshold.position.y)
             {
-                Debug.Log("moveDone: " + moveDone);
                 MoveUp();
             }
             else if (player.position.y < bottomThreshold.position.y)
             {
-                Debug.Log("moveDone: " + moveDone);
                 MoveDown();
             }
         }
