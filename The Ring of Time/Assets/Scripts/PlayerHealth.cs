@@ -23,10 +23,29 @@ public class PlayerHealth : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Spike") && collision.gameObject.GetComponent<Spinning>().GetCanSpin())
+        if (collision.gameObject.CompareTag("Obstacle"))
         {
-            Debug.Log("Player died");
-            PlayerDied();
+            if (collision.gameObject.GetComponent<Spinning>() != null)
+            {
+                if (collision.gameObject.GetComponent<Spinning>().GetCanSpin())
+                {
+                    PlayerDied();
+                }
+            }
+            else
+            {
+                PlayerDied();
+            }
+            
+            
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.CompareTag("Water"))
+        {
+            PlayerDrowned();
         }
     }
 
@@ -37,6 +56,18 @@ public class PlayerHealth : MonoBehaviour
         gameObject.GetComponent<PlayerMovement>().enabled = false;
         gameObject.GetComponent<PickUp>().enabled = false;
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, deathFlop);
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().playerDead = true;
+        GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().RespawnCamera();
+        Invoke("Respawn", 2f);
+    }
+
+    void PlayerDrowned()
+    {
+        gameObject.GetComponent<PickUp>().PlayerDied();
+        // gameObject.GetComponent<Collider2D>().enabled = false;
+        gameObject.GetComponent<PlayerMovement>().enabled = false;
+        gameObject.GetComponent<PickUp>().enabled = false;
+        // gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, deathFlop);
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().playerDead = true;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().RespawnCamera();
         Invoke("Respawn", 2f);

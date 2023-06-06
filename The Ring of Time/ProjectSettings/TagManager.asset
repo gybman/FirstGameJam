@@ -6,8 +6,9 @@ TagManager:
   tags:
   - Ground
   - Pickup
-  - Spike
   - Check Point
+  - Obstacle
+  - Water
   layers:
   - Default
   - TransparentFX

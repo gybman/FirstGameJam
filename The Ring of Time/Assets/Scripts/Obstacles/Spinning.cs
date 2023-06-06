@@ -6,6 +6,7 @@ public class Spinning : MonoBehaviour
 {
     [SerializeField] private float defaultRotationSpeed = 400f; // Speed of rotation in degrees per second
     [SerializeField] private float slowedRotationSpeed = 200f;
+    [SerializeField] private bool spinDirection;                // true: clockwise, false: counter-clockwise
     private bool canSpin;
     private Rigidbody2D rb;
 
@@ -19,6 +20,7 @@ public class Spinning : MonoBehaviour
     {
         // Rotates with physics so frozen balls can jam it
         float rotationSpeed = Time.timeScale == 0.5f ? slowedRotationSpeed : defaultRotationSpeed;
+        if (spinDirection) rotationSpeed *= -1;     // inverts direction
         rb.angularVelocity = rotationSpeed * Mathf.Deg2Rad;
     }
 
