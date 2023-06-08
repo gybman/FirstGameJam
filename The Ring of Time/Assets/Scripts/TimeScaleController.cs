@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TimeScaleController : MonoBehaviour
 {
@@ -12,6 +13,12 @@ public class TimeScaleController : MonoBehaviour
 
     [SerializeField] private float abilityDuration = 3f;
     private float timer = 0f;
+
+    public bool slowDownEnabled = false;
+    public bool speedUpEnabled = false;
+    public bool stoppingEnabled = false;
+    [SerializeField] private Image uiTimerBackground;
+    [SerializeField] private Image uiFill;
 
     void Update()
     {
@@ -63,8 +70,12 @@ public class TimeScaleController : MonoBehaviour
 
         if (abilityActive)
         {
+            uiTimerBackground.enabled = true;
+            uiFill.enabled = true;
             // Update the timer based on unscaled deltaTime
             timer -= Time.unscaledDeltaTime;
+
+            uiFill.fillAmount = Mathf.InverseLerp(0, abilityDuration, timer);
 
             if (timer <= 0f)
             {
@@ -76,27 +87,36 @@ public class TimeScaleController : MonoBehaviour
 
     void SlowDownTime()
     {
-        DefaultTimeScale();
-        Time.timeScale = 0.5f;
-        isTimeSlowed = true;
+        if (slowDownEnabled)
+        {
+            DefaultTimeScale();
+            Time.timeScale = 0.5f;
+            isTimeSlowed = true;
+        }
     }
 
     void SpeedUpTime()
     {
-        DefaultTimeScale();
-        Time.timeScale = 2f;
-        isTimeSped = true;
+        if (speedUpEnabled)
+        {
+            DefaultTimeScale();
+            Time.timeScale = 2f;
+            isTimeSped = true;
+        }
     }
 
     void StopTime()
     {
-        DefaultTimeScale();
-        //Time.timeScale = 0f;
-        velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
-        gameObject.GetComponent<PlayerMovement>().enabled = false;
-        gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;//simulated = false;
-        gameObject.GetComponent<PickUp>().enabled = false;
-        isTimeFrozen = true;
+        if (stoppingEnabled)
+        {
+            DefaultTimeScale();
+            //Time.timeScale = 0f;
+            velocity = gameObject.GetComponent<Rigidbody2D>().velocity;
+            gameObject.GetComponent<PlayerMovement>().enabled = false;
+            gameObject.GetComponent<Rigidbody2D>().constraints = RigidbodyConstraints2D.FreezeAll;//simulated = false;
+            gameObject.GetComponent<PickUp>().enabled = false;
+            isTimeFrozen = true;
+        }
     }
 
     void DefaultTimeScale()
@@ -114,6 +134,8 @@ public class TimeScaleController : MonoBehaviour
         }
 
         timer = abilityDuration;
+        uiTimerBackground.enabled = false;
+        uiFill.enabled = false;
     }
 
     public bool GetIsTimeFrozen()

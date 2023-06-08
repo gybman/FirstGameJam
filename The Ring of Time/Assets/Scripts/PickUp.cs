@@ -9,12 +9,13 @@ public class PickUp : MonoBehaviour
     private GameObject objectToHold;
 
     private TimeScaleController timeController;
+    [SerializeField] private GameObject[] ringSprites;
 
     // Start is called before the first frame update
     void Start()
     {
         timeController = GetComponent<TimeScaleController>();
-        timeController.enabled = false;
+        //timeController.enabled = false;
     }
 
     // Update is called once per frame
@@ -58,11 +59,30 @@ public class PickUp : MonoBehaviour
         {
             if (nearestObject.name == "Ring")
             {
-                nearestObject.GetComponent<Collider2D>().enabled = false;
-                nearestObject.transform.SetParent(transform);
-                nearestObject.transform.localPosition = Vector3.up;
-                nearestObject.GetComponent<Rigidbody2D>().simulated = false;
-                timeController.enabled = true;
+                //nearestObject.GetComponent<Collider2D>().enabled = false;
+                //nearestObject.transform.SetParent(transform);
+                //nearestObject.transform.localPosition = Vector3.up;
+                //nearestObject.GetComponent<Rigidbody2D>().simulated = false;
+                Destroy(nearestObject);
+                
+                //timeController.enabled = true;
+                if (!timeController.slowDownEnabled)
+                {
+                    timeController.slowDownEnabled = true;
+                    ringSprites[0].SetActive(true);
+                    ringSprites[1].SetActive(true);
+                    
+                }else if (!timeController.speedUpEnabled)
+                {
+                    timeController.speedUpEnabled = true;
+                    ringSprites[2].SetActive(true);
+                }
+                else if (!timeController.stoppingEnabled)
+                {
+                    timeController.stoppingEnabled = true;
+                    ringSprites[3].SetActive(true);
+                }
+
                 isHoldingObject = false;
             }
             else
