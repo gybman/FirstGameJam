@@ -57,7 +57,7 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void OnCollisionStay2D(Collision2D collision)
     {
         // collision.gameObject.layer == groundLayer
         if (IsObstacleBelowPlayer() && !IsObstacleAboveHead())

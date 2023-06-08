@@ -8,6 +8,7 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float deathFlop;
     [SerializeField] private SpawnManager spawnPoint;
     [SerializeField] private CheckpointManager checkPointSave;
+    private bool waterTriggerStayAlreadyExecuted = false;
 
     // Start is called before the first frame update
     void Start()
@@ -36,18 +37,34 @@ public class PlayerHealth : MonoBehaviour
             {
                 PlayerDied();
             }
-            
-            
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    //private void OnTriggerEnter2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Water"))
+    //    {
+    //        PlayerDrowned();
+    //        waterTriggerStayAlreadyExecuted = true;
+    //    }
+    //}
+
+    private void OnTriggerStay2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Water"))
+        if (collision.gameObject.CompareTag("Water") && !waterTriggerStayAlreadyExecuted)
         {
             PlayerDrowned();
+            waterTriggerStayAlreadyExecuted = true;
         }
     }
+
+    //private void OnTriggerExit2D(Collider2D collision)
+    //{
+    //    if (collision.gameObject.CompareTag("Water") && waterTriggerStayAlreadyExecuted)
+    //    {
+    //        waterTriggerStayAlreadyExecuted = false;
+    //    }
+    //}
 
     void PlayerDied()
     {
@@ -81,6 +98,7 @@ public class PlayerHealth : MonoBehaviour
         gameObject.GetComponent<PickUp>().enabled = true;
         gameObject.transform.position = spawnPoint.GetRespawnPoint().position;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().playerDead = false;
+        if (waterTriggerStayAlreadyExecuted) waterTriggerStayAlreadyExecuted = false;
         checkPointSave.LoadPositions();
     }
 }
