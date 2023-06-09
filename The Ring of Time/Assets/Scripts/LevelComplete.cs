@@ -42,6 +42,11 @@ public class LevelComplete : MonoBehaviour
         }
     }
 
+    public void StartNextLevel()
+    {
+        StartCoroutine(TransitionRoutine());
+    }
+
     private IEnumerator TransitionRoutine()
     {
         // Fade in the transition image

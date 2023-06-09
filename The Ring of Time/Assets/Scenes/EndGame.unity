@@ -547,7 +547,7 @@ RectTransform:
   m_GameObject: {fileID: 1584078204}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 4.022129, y: 4.022129, z: 4.022129}
+  m_LocalScale: {x: 5.799508, y: 5.799508, z: 5.799508}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 422268865}
@@ -555,7 +555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 48.904297, y: 203}
+  m_AnchoredPosition: {x: 48.904297, y: 284}
   m_SizeDelta: {x: 297.8086, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1584078206
@@ -578,10 +578,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: It's about GOD DAMN TIME!! You're fucking dog shit! You got no sense of
-    timing and you make the dumbest fucking mistakes. You think I wasn't watching
-    you!! I'm right behind you, watching your every fucking move! Next time it takes
-    you this long again, I'm coming for you!!!
+  m_text: Thanks for playing!!
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -608,7 +605,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 18
+  m_fontSize: 33.65
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -685,7 +682,7 @@ RectTransform:
   m_GameObject: {fileID: 1671928550}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1.5038, y: 1.5038, z: 1.5038}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 422268865}
@@ -693,7 +690,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 169, y: -339}
+  m_AnchoredPosition: {x: 0, y: -200}
   m_SizeDelta: {x: 788.8316, y: 76.6893}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1671928552
@@ -716,13 +713,12 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u2026\u2026..\u2026../\xB4\xAF/)\u2026\u2026\u2026\u2026 (\\\xAF`\\\r\n\u2026\u2026\u2026\u2026/\u2026.//\u2026\u2026\u2026..
-    \u2026\\\\\u2026.\\\r\n\u2026\u2026\u2026../\u2026.//\u2026\u2026\u2026\u2026
-    \u2026.\\\\\u2026.\\\r\n\u2026../\xB4\xAF/\u2026./\xB4\xAF\\\u2026\u2026\u2026../\xAF
-    `\\\u2026.\\\xAF`\\\r\n.././\u2026/\u2026./\u2026./.|_\u2026\u2026_| .\\\u2026.\\\u2026.\\\u2026\\.\\..\r\n(.(\u2026.(\u2026.(\u2026./.)..)..(..(.
-    \\\u2026.)\u2026.)\u2026.)\u2026 )\r\n.\\\u2026\u2026\u2026\u2026\u2026.\\/\u2026/\u2026.\\.
-    ..\\/\u2026\u2026\u2026\u2026\u2026./\r\n..\\\u2026\u2026\u2026\u2026\u2026..
-    /\u2026\u2026..\\\u2026\u2026\u2026\u2026\u2026..\u2026/\r\n\u2026.\\\u2026\u2026\u2026\u2026..(\u2026\u2026\u2026\u2026)\u2026\u2026\u2026\u2026\u2026./"
+  m_text: Level 3 is in the making bringing another stone that gives the ability
+    to stop time. Certain objects will only be able to move when time is frozen but
+    freezing time will stop all other movement including the player. New puzzles
+    will use these new mechanics along with the previous 2 stones. Art and sound
+    effects will also be coming later on so stay tuned if you enjoyed what you just
+    played.
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -756,7 +752,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
