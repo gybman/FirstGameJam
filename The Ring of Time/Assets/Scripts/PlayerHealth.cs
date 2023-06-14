@@ -68,8 +68,16 @@ public class PlayerHealth : MonoBehaviour
 
     void PlayerDied()
     {
+        Collider2D[] playerColliders = gameObject.GetComponentsInChildren<Collider2D>();
+        foreach (Collider2D collider in playerColliders)
+        {
+            if (!collider.CompareTag("Pickup"))
+            {
+                collider.enabled = false;
+            }
+        }
         gameObject.GetComponent<PickUp>().PlayerDied();
-        gameObject.GetComponent<Collider2D>().enabled = false;
+        // gameObject.GetComponent<Collider2D>().enabled = false;
         gameObject.GetComponent<PlayerMovement>().enabled = false;
         gameObject.GetComponent<PickUp>().enabled = false;
         gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, deathFlop);
@@ -84,7 +92,6 @@ public class PlayerHealth : MonoBehaviour
         // gameObject.GetComponent<Collider2D>().enabled = false;
         gameObject.GetComponent<PlayerMovement>().enabled = false;
         gameObject.GetComponent<PickUp>().enabled = false;
-        // gameObject.GetComponent<Rigidbody2D>().velocity = new Vector2(0, deathFlop);
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().playerDead = true;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().RespawnCamera();
         Invoke("Respawn", 2f);
@@ -92,13 +99,19 @@ public class PlayerHealth : MonoBehaviour
 
     void Respawn()
     {
+        
         Debug.Log("Respawning");
-        gameObject.GetComponent<Collider2D>().enabled = true;
+        Collider2D[] playerColliders = gameObject.GetComponentsInChildren<Collider2D>();
+        foreach(Collider2D collider in playerColliders)
+        {
+            collider.enabled = true;
+        }
         gameObject.GetComponent<PlayerMovement>().enabled = true;
         gameObject.GetComponent<PickUp>().enabled = true;
         gameObject.transform.position = spawnPoint.GetRespawnPoint().position;
         GameObject.FindGameObjectWithTag("MainCamera").GetComponent<MoveCamera>().playerDead = false;
         if (waterTriggerStayAlreadyExecuted) waterTriggerStayAlreadyExecuted = false;
         checkPointSave.LoadPositions();
+        
     }
 }

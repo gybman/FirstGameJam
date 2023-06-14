@@ -88,7 +88,7 @@ public class PickUp : MonoBehaviour
             else
             {
                 nearestObject.transform.SetParent(transform);
-                nearestObject.transform.localPosition = Vector3.up;
+                nearestObject.transform.localPosition = Vector3.up * 5;
                 nearestObject.GetComponent<Rigidbody2D>().simulated = false;
                 isHoldingObject = true;
                 objectToHold = nearestObject;

@@ -19,9 +19,13 @@ public class PlayerMovement : MonoBehaviour
     private int wallJump = 7;
     private Rigidbody2D rb;
     private GameObject lastCollisionObject;
+    private bool isGrounded = true;
+
+    private Animator anim;
 
     private void Start()
     {
+        anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = maxJumps;
         abovePlayerRaycastOrigin = new Vector2(abovePlayerRaycastTransform.position.x, abovePlayerRaycastTransform.position.y);
@@ -34,6 +38,15 @@ public class PlayerMovement : MonoBehaviour
         float moveHorizontal = Input.GetAxis("Horizontal");
         Vector2 movement = new Vector2(moveHorizontal * moveSpeed, rb.velocity.y);
         rb.velocity = movement;
+
+        if (moveHorizontal == 0)
+        {
+            anim.SetBool("isRunning", false);
+        }
+        else
+        {
+            anim.SetBool("isRunning", true);
+        }
 
         // Flip sprite if moving in the opposite direction
         if (moveHorizontal > 0)
@@ -50,10 +63,20 @@ public class PlayerMovement : MonoBehaviour
         {
             if (jumpsRemaining > 0)
             {
+                anim.SetTrigger("takeOff");
                 rb.velocity = new Vector2(rb.velocity.x, jumpForce);
                 jumpsRemaining--;
             }
             // rb.AddForce(new Vector2(0f, jumpForce), ForceMode2D.Impulse);
+        }
+
+        if (IsObstacleBelowPlayer())
+        {
+            anim.SetBool("isJumping", false);
+        }
+        else
+        {
+            anim.SetBool("isJumping", true);
         }
     }
 
@@ -64,6 +87,7 @@ public class PlayerMovement : MonoBehaviour
         {
             // isGrounded = true;
             jumpsRemaining = maxJumps;
+
         }
 
         if (collision.gameObject.layer == wallJump && collision.gameObject != lastCollisionObject)
@@ -105,6 +129,14 @@ public class PlayerMovement : MonoBehaviour
         belowPlayerRaycastOrigin = new Vector2(belowPlayerRaycastTransform.position.x, belowPlayerRaycastTransform.position.y);
         RaycastHit2D hit = Physics2D.Raycast(belowPlayerRaycastOrigin, Vector2.down, raycastDistance);
         obstacleBelowHead = hit.collider != null && !hit.collider.CompareTag("Check Point");
+        if (obstacleBelowHead)
+        {
+            isGrounded = true;
+        }
+        else
+        {
+            isGrounded = false;
+        }
         return obstacleBelowHead;
     }
 }
